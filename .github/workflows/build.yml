@@ -1,0 +1,46 @@
+name: Build mpv
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+
+    steps:
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install build dependencies
+        run: sudo apt-get install `cat build_depends_xenial.txt`
+
+      - name: Configure
+        run: |
+            ./use-ffmpeg-release
+            ./use-libass-master
+            ./use-mpv-release
+
+      - name: Update sources
+        run: ./update
+
+      - name: Build libass
+        run: |
+            scripts/libass-config
+            scripts/libass-build
+
+      - name: Build ffmpeg
+        run: |
+            scripts/ffmpeg-config
+            scripts/ffmpeg-build
+
+      - name: Build mpv
+        run: |
+            scripts/mpv-config
+            scripts/mpv-build
+
+      - name: Create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mpv
+          path: mpv/build/mpv
