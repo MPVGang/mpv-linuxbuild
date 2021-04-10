@@ -18,7 +18,8 @@ jobs:
       - name: Configure
         run: |
             ./use-ffmpeg-release
-            ./use-libass-custom 0.14.0
+            #./use-libass-custom 0.14.0
+            ./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
             ./use-mpv-release
 
       - name: Update sources
