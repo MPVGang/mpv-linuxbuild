@@ -1,4 +1,4 @@
- devscripts equivs
+ devscripts equivs yasm
  debhelper
  libasound2-dev
  libass-dev
