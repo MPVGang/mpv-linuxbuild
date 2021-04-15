@@ -30,9 +30,11 @@ jobs:
             sudo apt-get update
             sudo apt-get install devscripts equivs
       
-      - name: Remove dependencies
-        run: sed -i '/libdav1d-dev/d' debian/control
-
+      - name: Modify debian files
+        run: |
+            sed -i '/libdav1d-dev/d' debian/control
+            sed -i '/enable-libdav1d/d' debian/rules
+            
       - name: Add mpv-tests repository
         run: |
             sudo add-apt-repository ppa:mc3man/mpv-tests --yes
