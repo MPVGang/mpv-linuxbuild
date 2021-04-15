@@ -31,11 +31,11 @@ jobs:
             #sed -e 's/libdav1d-dev/libssl-dev/' -i debian/control
             #sed -e 's/--enable-libdav1d/--enable-openssl --enable-nonfree/' -i debian/rules
             
-      - name: Add mpv-tests repository
-        run: |
-            sudo add-apt-repository ppa:mc3man/mpv-tests --yes
-            sudo apt-get update
-        if: ${{ false }}
+      #- name: Add mpv-tests repository
+      #  run: |
+      #      sudo add-apt-repository ppa:mc3man/mpv-tests --yes
+      #      sudo apt-get update
+      #  if: ${{ false }}
 
       - name: Install build dependencies
         run: |
