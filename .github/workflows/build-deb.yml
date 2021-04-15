@@ -1,0 +1,38 @@
+name: Build mpv
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+
+    steps:
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install openssl and libssl-dev
+        run: |
+            sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
+            dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
+
+      - name: Configure
+        run: |
+            ./use-ffmpeg-release
+            ./use-libass-custom 0.14.0
+            #./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
+            ./use-mpv-release
+
+      - name: Update sources
+        run: ./update
+        
+      - name: Install devscripts
+        run: apt-get install devscripts equivs
+        
+      - name: Install build dependencies
+        run: mk-build-deps -s sudo -i
+        
+      - name: Build package
+        run: dpkg-buildpackage -uc -us -b -j4
+        
