@@ -28,7 +28,7 @@ jobs:
         run: ./update
         
       - name: Install devscripts
-        run: apt-get install devscripts equivs
+        run: sudo apt-get install devscripts equivs
         
       - name: Install build dependencies
         run: mk-build-deps -s sudo -i
