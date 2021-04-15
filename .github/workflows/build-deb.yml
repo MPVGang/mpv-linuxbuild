@@ -5,7 +5,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-16.04
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { name: 'xenial', os: 'ubuntu-16.04' }
+          #- { name: 'bionic', os: 'ubuntu-18.04' }
+          - { name: 'focal', os: 'ubuntu-20.04' }
+          
+    runs-on: ${{ matrix.config.os }}
 
     steps:
 
@@ -16,6 +24,7 @@ jobs:
         run: |
             sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
             dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
+        if: ${{ matrix.config.name == 'xenial' }}
 
       - name: Install devscripts
         run: sudo apt-get install devscripts equivs
@@ -24,14 +33,14 @@ jobs:
         run: |
             sudo add-apt-repository ppa:mc3man/mpv-tests --yes
             sudo apt-get update
+        if: ${{ matrix.config.name == 'xenial' }}
 
       - name: Install build dependencies
-        #run: mk-build-deps -s sudo -i
         run: |
             mk-build-deps
             ls *.deb
             dpkg --info ./mpv-build-deps*.deb
-            sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --ignore-missing --yes
+            sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --yes
      
       - name: Configure sources
         run: |
@@ -52,6 +61,6 @@ jobs:
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mpv
+          name: mpv-${{ matrix.config.name }}
           path: ./mpv_*.deb
   
