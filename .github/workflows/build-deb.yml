@@ -44,5 +44,14 @@ jobs:
         run: ./update
       
       - name: Build package
-        run: dpkg-buildpackage -uc -us -b -j4
+        run: |
+            dpkg-buildpackage -uc -us -b -j4
+            mv ../mpv_*.deb .
+            ls -l mpv_*.deb
         
+      - name: Create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mpv
+          path: ./mpv_*.deb
+  
