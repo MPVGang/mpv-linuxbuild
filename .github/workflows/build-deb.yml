@@ -27,7 +27,9 @@ jobs:
         if: ${{ matrix.config.name == 'xenial' }}
 
       - name: Install devscripts
-        run: sudo apt-get install devscripts equivs
+        run: |
+            sudo apt-get update
+            sudo apt-get install devscripts equivs
       
       - name: Add repository
         run: |
@@ -45,9 +47,14 @@ jobs:
       - name: Configure sources
         run: |
             ./use-ffmpeg-release
+            ./use-libass-custom 0.15.0
+            ./use-mpv-release
+            
+      - name: Configure libass
+        run: |
             ./use-libass-custom 0.14.0
             #./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
-            ./use-mpv-release
+        if: ${{ matrix.config.name == 'xenial' }}
 
       - name: Update sources
         run: ./update
