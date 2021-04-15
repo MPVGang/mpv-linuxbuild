@@ -1,4 +1,4 @@
-name: Build mpv
+name: Build mpv deb
 
 on:
   workflow_dispatch:
