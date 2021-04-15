@@ -10,7 +10,7 @@ jobs:
       matrix:
         config:
           - { name: 'xenial', os: 'ubuntu-16.04' }
-          #- { name: 'bionic', os: 'ubuntu-18.04' }
+          - { name: 'bionic', os: 'ubuntu-18.04' }
           - { name: 'focal', os: 'ubuntu-20.04' }
           
     runs-on: ${{ matrix.config.os }}
@@ -31,11 +31,10 @@ jobs:
             sudo apt-get update
             sudo apt-get install devscripts equivs
       
-      - name: Add repository
+      - name: Add mpv-tests repository
         run: |
             sudo add-apt-repository ppa:mc3man/mpv-tests --yes
             sudo apt-get update
-        if: ${{ matrix.config.name == 'xenial' }}
 
       - name: Install build dependencies
         run: |
