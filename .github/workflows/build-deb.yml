@@ -1,7 +1,6 @@
 name: Build mpv deb
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   build:
@@ -20,7 +19,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install openssl and libssl-dev
+      - name: Downgrade openssl and libssl-dev (xenial)
         run: |
             sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
             dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
