@@ -44,13 +44,12 @@ jobs:
             dpkg --info ./mpv-build-deps*.deb
             sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --yes
             
-      - name: Downgrade openssl and libssl-dev (xenial)
-        run: |
-            sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
-            dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
-        if: ${{ matrix.config.name == 'xenial' }}
+      #- name: Downgrade openssl and libssl-dev (xenial)
+      #  run: |
+      #      sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
+      #      dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
+      #  if: ${{ matrix.config.name == 'xenial' }}
 
-     
       - name: Configure sources
         run: |
             ./use-ffmpeg-release
