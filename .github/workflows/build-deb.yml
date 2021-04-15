@@ -17,7 +17,18 @@ jobs:
             sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
             dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
 
-      - name: Configure
+      - name: Install devscripts
+        run: sudo apt-get install devscripts equivs
+        
+      - name: Install build dependencies
+        #run: mk-build-deps -s sudo -i
+        run: |
+            mk-build-deps
+            ls *.deb
+            dpkg --info ./mpv-build-deps*.deb
+            sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --ignore-missing --yes
+     
+      - name: Configure sources
         run: |
             ./use-ffmpeg-release
             ./use-libass-custom 0.14.0
@@ -26,16 +37,7 @@ jobs:
 
       - name: Update sources
         run: ./update
-        
-      - name: Install devscripts
-        run: sudo apt-get install devscripts equivs
-        
-      - name: Install build dependencies
-        #run: mk-build-deps -s sudo -i
-        run: |
-            mk-build-deps
-            sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --ignore-missing --yes
-        
+      
       - name: Build package
         run: dpkg-buildpackage -uc -us -b -j4
         
