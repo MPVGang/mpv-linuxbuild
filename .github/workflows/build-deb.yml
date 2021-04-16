@@ -30,7 +30,7 @@ jobs:
             sed -i '/enable-libdav1d/d' debian/rules
             
       - name: Use openssl
-        run:
+        run: |
             sed -e 's/libgnutls-dev | libgnutls28-dev/libssl-dev/' -i debian/control
             sed -e 's/--enable-gnutls/--enable-openssl/' -i debian/rules
             sed -e 's/--enable-gpl/--enable-nonfree/' -i debian/rules
