@@ -63,7 +63,14 @@ jobs:
         run: |
             ./use-ffmpeg-release
             ./use-libass-custom 0.15.0
-            ./use-mpv-release
+            
+      - name: Use mpv release
+        run: ./use-mpv-release
+        if: ${{ inputs.mpv_version == 'release'}}
+      
+      - name: Use mpv master
+        run: ./use-mpv-master
+        if: ${{ inputs.mpv_version == 'master'}}
             
       - name: Configure libass
         run: |
