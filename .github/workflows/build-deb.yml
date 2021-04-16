@@ -1,4 +1,4 @@
-name: Build mpv deb
+name: Build mpv deb packages
 
 on: workflow_dispatch
 
@@ -24,12 +24,16 @@ jobs:
             sudo apt-get update
             sudo apt-get install devscripts equivs
       
-      - name: Modify debian files
+      - name: Remove unavailable dependencies
         run: |
             sed -i '/libdav1d-dev/d' debian/control
             sed -i '/enable-libdav1d/d' debian/rules
-            #sed -e 's/libdav1d-dev/libssl-dev/' -i debian/control
-            #sed -e 's/--enable-libdav1d/--enable-openssl --enable-nonfree/' -i debian/rules
+            
+      - name: Use openssl
+        run:
+            sed -e 's/libgnutls-dev | libgnutls28-dev/libssl-dev/' -i debian/control
+            sed -e 's/--enable-gnutls/--enable-openssl/' -i debian/rules
+            sed -e 's/--enable-gpl/--enable-nonfree/' -i debian/rules
             
       #- name: Add mpv-tests repository
       #  run: |
@@ -44,11 +48,11 @@ jobs:
             dpkg --info ./mpv-build-deps*.deb
             sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --yes
             
-      #- name: Downgrade openssl and libssl-dev (xenial)
-      #  run: |
-      #      sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
-      #      dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
-      #  if: ${{ matrix.config.name == 'xenial' }}
+      - name: Downgrade openssl and libssl-dev (xenial)
+        run: |
+            sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
+            dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
+        if: ${{ matrix.config.name == 'xenial' }}
 
       - name: Configure sources
         run: |
