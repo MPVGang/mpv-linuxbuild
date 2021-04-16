@@ -66,11 +66,11 @@ jobs:
             
       - name: Use mpv release
         run: ./use-mpv-release
-        if: ${{ inputs.mpv_version == 'release'}}
+        if: ${{ github.event.inputs.mpv_version == 'release'}}
       
       - name: Use mpv master
         run: ./use-mpv-master
-        if: ${{ inputs.mpv_version == 'master'}}
+        if: ${{ github.event.inputs.mpv_version == 'master'}}
             
       - name: Configure libass
         run: |
