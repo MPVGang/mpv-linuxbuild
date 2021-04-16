@@ -69,8 +69,14 @@ jobs:
       - name: Update sources
         run: ./update
       
-      - name: Build package
+      - name: Get version
         run: |
+            sed -n "s/mpv (\(.*\)).*/\1/p" debian/changelog > version.txt
+            cat version.txt
+            echo "MPV_VERSION=`cat version.txt`" >> $GITHUB_ENV
+            
+      - name: Build package
+        run:
             dpkg-buildpackage -uc -us -b -j4
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
