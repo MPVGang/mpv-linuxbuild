@@ -64,6 +64,12 @@ jobs:
             ./use-ffmpeg-release
             ./use-libass-custom 0.15.0
             
+      - name: Use old libass for xenial
+        run: |
+            ./use-libass-custom 0.14.0
+            #./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
+        if: ${{ matrix.config.name == 'xenial' }}
+     
       - name: Use mpv release
         run: ./use-mpv-release
         if: ${{ github.event.inputs.mpv_version == 'release'}}
@@ -71,12 +77,6 @@ jobs:
       - name: Use mpv master
         run: ./use-mpv-master
         if: ${{ github.event.inputs.mpv_version == 'master'}}
-            
-      - name: Configure libass
-        run: |
-            ./use-libass-custom 0.14.0
-            #./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
-        if: ${{ matrix.config.name == 'xenial' }}
 
       - name: Update sources
         run: ./update
