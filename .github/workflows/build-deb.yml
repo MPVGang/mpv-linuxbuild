@@ -85,7 +85,7 @@ jobs:
         run: |
             sed -n "s/mpv (\(.*\)).*/\1/p" debian/changelog > version.txt
             cat version.txt
-            echo "MPV_VERSION=`cat version.txt`" >> $GITHUB_ENV
+            echo "MPV_VERSION=`cat version.txt | tr : _`" >> $GITHUB_ENV
             
       - name: Build package
         run: |
