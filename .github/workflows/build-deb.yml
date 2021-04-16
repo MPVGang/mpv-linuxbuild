@@ -76,7 +76,7 @@ jobs:
             echo "MPV_VERSION=`cat version.txt`" >> $GITHUB_ENV
             
       - name: Build package
-        run:
+        run: |
             dpkg-buildpackage -uc -us -b -j4
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
