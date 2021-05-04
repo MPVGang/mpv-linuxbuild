@@ -42,7 +42,7 @@ jobs:
 
       - name: Build mpv
         run: |
-            scripts/mpv-config
+            scripts/mpv-config --enable-gl-x11
             scripts/mpv-build
             strip mpv/build/mpv
 
