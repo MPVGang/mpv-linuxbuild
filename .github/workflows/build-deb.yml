@@ -69,8 +69,8 @@ jobs:
             
       - name: Use old libass for xenial
         run: |
-            ./use-libass-custom 0.14.0
-            #./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
+            #./use-libass-custom 0.14.0
+            ./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
         if: ${{ matrix.config.name == 'xenial' }}
      
       - name: Use mpv release
