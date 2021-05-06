@@ -50,7 +50,7 @@ jobs:
         run: sudo apt-get install `cat build_depends_xenial.txt`
 
       - name: Install build dependencies
-        if: ${{ false }}
+        #if: ${{ false }}
         run: |
             mk-build-deps
             ls *.deb
