@@ -27,7 +27,7 @@ jobs:
       - name: Install devscripts
         run: |
             sudo apt-get update
-            sudo apt-get install devscripts equivs
+            sudo apt-get install devscripts equivs nasm
       
       - name: Remove unavailable dependencies
         run: |
@@ -93,7 +93,7 @@ jobs:
       - name: Build libass
         run: |
             scripts/libass-config
-            scripts/libass-build
+            scripts/libass-build -w -j4
 
       - name: Build package
         run: |
