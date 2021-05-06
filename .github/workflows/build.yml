@@ -26,6 +26,7 @@ jobs:
             #./use-libass-custom 0.14.0
             ./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
             ./use-mpv-release
+            echo "--enable-gl-x11 --enable-libmpv-shared" > mpv_options
 
       - name: Update sources
         run: ./update
@@ -42,7 +43,7 @@ jobs:
 
       - name: Build mpv
         run: |
-            scripts/mpv-config --enable-gl-x11 --enable-libmpv-shared
+            scripts/mpv-config
             scripts/mpv-build
             strip mpv/build/mpv
 
