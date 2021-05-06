@@ -30,6 +30,7 @@ install:
 	exec dh $@
 
 libass_config:
+        printenv \
 	scripts/libass-config
 
 libass_build: libass_config
