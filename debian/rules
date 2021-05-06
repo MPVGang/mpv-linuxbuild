@@ -30,6 +30,7 @@ install:
 	exec dh $@
 
 libass_config:
+	unset GCJFLAGS CFLAGS CXXFLAGS CPPFLAGS FFLAGS LDFLAGS FCFLAGS OBJCXXFLAGS OBJCFLAGS
 	printenv
 	scripts/libass-config
 
