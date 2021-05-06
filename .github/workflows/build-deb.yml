@@ -15,7 +15,7 @@ jobs:
         config:
           - { name: 'xenial', os: 'ubuntu-16.04' }
           #- { name: 'bionic', os: 'ubuntu-18.04' }
-          #- { name: 'focal', os: 'ubuntu-20.04' }
+          - { name: 'focal', os: 'ubuntu-20.04' }
           
     runs-on: ${{ matrix.config.os }}
 
@@ -65,7 +65,7 @@ jobs:
       - name: Configure sources
         run: |
             ./use-ffmpeg-release
-            #./use-libass-custom 0.15.0
+            ./use-libass-custom 0.15.0
             
       - name: Use old libass for xenial
         run: |
@@ -90,22 +90,25 @@ jobs:
             VERSION="${VERSION/*:/}"
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
 
-      #- name: Build package
-      #  run: |
-      #      #dpkg-buildpackage -uc -us -b -j4
-      #      #fakeroot debian/rules build
+      - name: Build package
+        run: |
+            #dpkg-buildpackage -uc -us -b -j4
+            fakeroot debian/rules build
        
       - name: Build libass
+        if: ${{ false }}
         run: |
             scripts/libass-config
             scripts/libass-build -j4
 
       - name: Build ffmpeg
+        if: ${{ false }}
         run: |            
             scripts/ffmpeg-config
             scripts/ffmpeg-build -j4
             
       - name: Build mpv
+        if: ${{ false }}
         run: |         
             scripts/mpv-config --prefix=/usr --confdir=/etc/mpv
             scripts/mpv-build
@@ -113,6 +116,8 @@ jobs:
       - name: Build package
         run: |
             fakeroot debian/rules binary
+            ls -lR debian
+            cat debian/mpv.debhelper.log
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
         
