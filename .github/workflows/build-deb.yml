@@ -47,10 +47,6 @@ jobs:
       #  if: ${{ false }}
 
       - name: Install build dependencies
-        run: sudo apt-get install `cat build_depends_xenial.txt`
-
-      - name: Install build dependencies
-        #if: ${{ false }}
         run: |
             mk-build-deps
             ls *.deb
@@ -96,7 +92,8 @@ jobs:
             
       - name: Build package
         run: |
-            dpkg-buildpackage -uc -us -b -j4
+            #dpkg-buildpackage -uc -us -b -j4
+            dpkg-buildpackage -uc -us -b
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
         
