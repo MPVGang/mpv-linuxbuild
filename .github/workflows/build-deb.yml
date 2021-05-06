@@ -92,6 +92,7 @@ jobs:
 
       - name: Build libass
         run: |
+            ./clean
             scripts/libass-config
             scripts/libass-build -w -j4
 
