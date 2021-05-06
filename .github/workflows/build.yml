@@ -42,7 +42,7 @@ jobs:
 
       - name: Build mpv
         run: |
-            scripts/mpv-config --enable-gl-x11
+            scripts/mpv-config --enable-gl-x11 --enable-libmpv-shared
             scripts/mpv-build
             strip mpv/build/mpv
 
@@ -50,4 +50,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: mpv
-          path: mpv/build/mpv
+          path: mpv/build/
