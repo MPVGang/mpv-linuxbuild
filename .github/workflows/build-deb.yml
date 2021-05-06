@@ -90,21 +90,23 @@ jobs:
             VERSION="${VERSION/*:/}"
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Build libass
-        run: |
-            ./clean
-            scripts/libass-config
-            scripts/libass-build -w -j4
+      #- name: Build libass
+      #  run: |
+      #      ./clean
+      #      scripts/libass-config
+      #      scripts/libass-build -w -j4
 
-      - name: Build libass 2
-        run: |
-            ./clean
-            scripts/libass-config
-            scripts/libass-build -w -j4
+      #- name: Build libass 2
+      #  run: |
+      #      ./clean
+      #      scripts/libass-config
+      #      scripts/libass-build -w -j4
 
       - name: Build package
         run: |
-            dpkg-buildpackage -uc -us -b -j4
+            #dpkg-buildpackage -uc -us -b -j4
+            fakeroot debian/rules build
+            fakeroot debian/rules binary
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
         
