@@ -15,7 +15,7 @@ jobs:
         config:
           - { name: 'xenial', os: 'ubuntu-16.04' }
           #- { name: 'bionic', os: 'ubuntu-18.04' }
-          - { name: 'focal', os: 'ubuntu-20.04' }
+          #- { name: 'focal', os: 'ubuntu-20.04' }
           
     runs-on: ${{ matrix.config.os }}
 
@@ -92,6 +92,7 @@ jobs:
 
       - name: Build package
         run: |
+            printenv
             #dpkg-buildpackage -uc -us -b -j4
             fakeroot debian/rules build
        
