@@ -31,8 +31,8 @@ install:
 
 libass_config:
 	unset GCJFLAGS CFLAGS CXXFLAGS CPPFLAGS FFLAGS LDFLAGS FCFLAGS OBJCXXFLAGS OBJCFLAGS
-	printenv
-	scripts/libass-config
+	CFLAGS="" CPPFLAGS="" printenv
+	CFLAGS="" CPPFLAGS="" scripts/libass-config
 
 libass_build: libass_config
 	scripts/libass-build $(MFLAGS)
