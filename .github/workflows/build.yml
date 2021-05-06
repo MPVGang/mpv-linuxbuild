@@ -12,8 +12,31 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      #- name: Install build dependencies
+      #  run: sudo apt-get install `cat build_depends_xenial.txt`
+
+      - name: Install devscripts
+        run: |
+            sudo apt-get update
+            sudo apt-get install devscripts equivs
+      
+      - name: Remove unavailable dependencies
+        run: |
+            sed -i '/libdav1d-dev/d' debian/control
+            sed -i '/enable-libdav1d/d' debian/rules
+            
+      - name: Use openssl
+        run: |
+            sed -e 's/libgnutls-dev | libgnutls28-dev/libssl-dev/' -i debian/control
+            sed -e 's/--enable-gnutls/--enable-openssl/' -i debian/rules
+            sed -e 's/--enable-gpl/--enable-nonfree/' -i debian/rules
+
       - name: Install build dependencies
-        run: sudo apt-get install `cat build_depends_xenial.txt`
+        run: |
+            mk-build-deps
+            ls *.deb
+            dpkg --info ./mpv-build-deps*.deb
+            sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --yes
         
       - name: Install openssl&libssl-dev
         run: |
