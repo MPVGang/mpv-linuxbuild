@@ -13,7 +13,9 @@ ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 	WAFFLAGS += -j$(NUMJOBS)
 endif
 
-export GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS=""
+#export GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS=""
+unset GCJFLAGS CFLAGS CXXFLAGS CPPFLAGS FFLAGS LDFLAGS
+unset FCFLAGS OBJCXXFLAGS OBJCFLAGS
 
 # make .PHONY all the targets that have name collisions with the scripts
 # see http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#rules
