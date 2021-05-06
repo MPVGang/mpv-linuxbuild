@@ -90,20 +90,28 @@ jobs:
             VERSION="${VERSION/*:/}"
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Build package
+      #- name: Build package
+      #  run: |
+      #      #dpkg-buildpackage -uc -us -b -j4
+      #      #fakeroot debian/rules build
+       
+      - name: Build libass
         run: |
-            #dpkg-buildpackage -uc -us -b -j4
-            #fakeroot debian/rules build
-            
             scripts/libass-config
             scripts/libass-build -j4
-            
+
+      - name: Build ffmpeg
+        run: |            
             scripts/ffmpeg-config
             scripts/ffmpeg-build -j4
             
+      - name: Build mpv
+        run: |         
             scripts/mpv-config --prefix=/usr --confdir=/etc/mpv
             scripts/mpv-build
             
+      - name: Build package
+        run: |
             fakeroot debian/rules binary
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
