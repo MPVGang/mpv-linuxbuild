@@ -65,7 +65,7 @@ jobs:
       - name: Configure sources
         run: |
             ./use-ffmpeg-release
-            ./use-libass-custom 0.15.0
+            #./use-libass-custom 0.15.0
             
       - name: Use old libass for xenial
         run: |
@@ -89,11 +89,15 @@ jobs:
             VERSION=`dpkg-parsechangelog --show-field Version`
             VERSION="${VERSION/*:/}"
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
-            
+
+      - name: Build libass
+        run: |
+            scripts/libass-config
+            scripts/libass-build
+
       - name: Build package
         run: |
-            #dpkg-buildpackage -uc -us -b -j4
-            dpkg-buildpackage -uc -us -b
+            dpkg-buildpackage -uc -us -b -j4
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
         
