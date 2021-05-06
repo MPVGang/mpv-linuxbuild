@@ -13,7 +13,7 @@ ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 	WAFFLAGS += -j$(NUMJOBS)
 endif
 
-CLF=GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS=""
+export GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS=""
 
 # make .PHONY all the targets that have name collisions with the scripts
 # see http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#rules
@@ -32,9 +32,8 @@ install:
 	exec dh $@
 
 libass_config:
-	#unset GCJFLAGS CFLAGS CXXFLAGS CPPFLAGS FFLAGS LDFLAGS FCFLAGS OBJCXXFLAGS OBJCFLAGS
-	GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" printenv
-	GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" scripts/libass-config
+	printenv
+	scripts/libass-config
 
 libass_build: libass_config
 	scripts/libass-build $(MFLAGS)
