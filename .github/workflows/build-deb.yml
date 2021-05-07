@@ -94,14 +94,9 @@ jobs:
         if: ${{ matrix.config.name == 'xenial' }}
         run: sed -e 's/scripts\//GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" scripts\//' -i debian/rules
 
-      - name: Compile
+      - name: Compile and build
         run: |
-            #dpkg-buildpackage -uc -us -b -j4
-            fakeroot debian/rules build
-
-      - name: Build package
-        run: |
-            fakeroot debian/rules binary
+            dpkg-buildpackage -uc -us -b -j4
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
         
