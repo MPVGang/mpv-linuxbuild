@@ -90,9 +90,13 @@ jobs:
             VERSION="${VERSION/*:/}"
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
 
+      - name: Patch
+        run: |
+            sed -e 's/scripts\//GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" scripts\//' -i debian/rules
+            cat debian/rules
+
       - name: Build package
         run: |
-            printenv
             #dpkg-buildpackage -uc -us -b -j4
             fakeroot debian/rules build
        
@@ -117,7 +121,7 @@ jobs:
       - name: Build package
         run: |
             fakeroot debian/rules binary
-            ls -lR debian
+            #ls -lR debian
             cat debian/mpv.debhelper.log
             mv ../mpv_*.deb .
             ls -l mpv_*.deb
