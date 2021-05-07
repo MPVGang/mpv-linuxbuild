@@ -17,8 +17,8 @@ jobs:
 
       - name: Install devscripts
         run: |
-            sudo apt-get update
-            sudo apt-get install devscripts equivs
+            sudo apt-get -y update
+            sudo apt-get -y install devscripts equivs
       
       - name: Remove unavailable dependencies
         run: |
@@ -36,7 +36,7 @@ jobs:
             mk-build-deps
             ls *.deb
             dpkg --info ./mpv-build-deps*.deb
-            sudo apt-get install ./mpv-build-deps*.deb --no-install-recommends --yes
+            sudo apt-get -y install ./mpv-build-deps*.deb --no-install-recommends
         
       - name: Install openssl&libssl-dev
         run: |
