@@ -5,7 +5,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-16.04
+    #runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
+    container: 'wachii/ubuntu-qt:16.04
 
     steps:
 
@@ -46,8 +48,8 @@ jobs:
       - name: Configure
         run: |
             ./use-ffmpeg-release
-            #./use-libass-custom 0.14.0
-            ./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
+            ./use-libass-custom 0.14.0
+            #./use-libass-custom 30bd3d34d32cebeb7b1af6b9e77f617ef1d2bb9a
             ./use-mpv-release
             echo "--enable-gl-x11 --enable-libmpv-shared" > mpv_options
 
