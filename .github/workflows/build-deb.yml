@@ -91,16 +91,13 @@ jobs:
       - name: Get version
         shell: bash
         run: |
-            cat debian/changelog
             VERSION=`dpkg-parsechangelog --show-field Version`
-            echo $VERSION
             VERSION="${VERSION/*:/}"
-            echo $VERSION
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Patch
-        if: ${{ matrix.config.name == 'xenial' }}
-        run: sed -e 's/scripts\//GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" scripts\//' -i debian/rules
+      #- name: Patch
+      #  if: ${{ matrix.config.name == 'xenial' }}
+      #  run: sed -e 's/scripts\//GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" scripts\//' -i debian/rules
 
       - name: Compile and build
         run: |
