@@ -14,8 +14,8 @@ jobs:
       matrix:
         config:
           - { name: 'xenial', os: 'ubuntu-16.04', container: 'wachii/ubuntu-qt:16.04' }
-          - { name: 'bionic', os: 'ubuntu-18.04', container: '' }
-          - { name: 'focal', os: 'ubuntu-20.04', container: '' }
+          #- { name: 'bionic', os: 'ubuntu-18.04', container: '' }
+          #- { name: 'focal', os: 'ubuntu-20.04', container: '' }
           
     runs-on: ${{ matrix.config.os }}
     container: ${{ matrix.config.container }}
@@ -87,8 +87,11 @@ jobs:
       
       - name: Get version
         run: |
+            cat debian/changelog
             VERSION=`dpkg-parsechangelog --show-field Version`
+            echo $VERSION
             VERSION="${VERSION/*:/}"
+            echo $VERSION
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Patch
