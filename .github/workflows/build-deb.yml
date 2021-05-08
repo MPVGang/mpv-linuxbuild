@@ -14,16 +14,15 @@ jobs:
       matrix:
         config:
           - { name: 'xenial', os: 'ubuntu-16.04', container: 'wachii/ubuntu-qt:16.04' }
-          #- { name: 'bionic', os: 'ubuntu-18.04', container: '' }
-          #- { name: 'focal', os: 'ubuntu-20.04', container: '' }
+          - { name: 'bionic', os: 'ubuntu-18.04', container: '' }
+          - { name: 'focal', os: 'ubuntu-20.04', container: '' }
           
     runs-on: ${{ matrix.config.os }}
     container: ${{ matrix.config.container }}
 
     steps:
-
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Install devscripts
         run: |
@@ -84,10 +83,7 @@ jobs:
 
       - name: Update sources
         run: ./update
-     
-      #- name: Setup tmate session
-      #  uses: mxschmitt/action-tmate@v3
-        
+
       - name: Get version
         shell: bash
         run: |
@@ -95,9 +91,9 @@ jobs:
             VERSION="${VERSION/*:/}"
             echo "MPV_VERSION=$VERSION" >> $GITHUB_ENV
 
-      #- name: Patch
-      #  if: ${{ matrix.config.name == 'xenial' }}
-      #  run: sed -e 's/scripts\//GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" scripts\//' -i debian/rules
+      - name: Patch
+        if: ${{ matrix.config.name == 'xenial' }}
+        run: sed -e 's/scripts\//GCJFLAGS="" CFLAGS="" CXXFLAGS="" CPPFLAGS="" FFLAGS="" LDFLAGS="" FCFLAGS="" OBJCXXFLAGS="" OBJCFLAGS="" scripts\//' -i debian/rules
 
       - name: Compile and build
         run: |
