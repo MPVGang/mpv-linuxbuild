@@ -104,5 +104,5 @@ jobs:
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mpv-${{ env.MPV_VERSION }}-${{ matrix.config.name }}
+          name: mpv-${{ env.MPV_VERSION }}
           path: ./mpv_*.deb
