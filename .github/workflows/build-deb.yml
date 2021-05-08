@@ -85,10 +85,11 @@ jobs:
       - name: Update sources
         run: ./update
      
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      #- name: Setup tmate session
+      #  uses: mxschmitt/action-tmate@v3
         
       - name: Get version
+        shell: bash
         run: |
             cat debian/changelog
             VERSION=`dpkg-parsechangelog --show-field Version`
