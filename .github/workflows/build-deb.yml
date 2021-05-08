@@ -84,7 +84,10 @@ jobs:
 
       - name: Update sources
         run: ./update
-      
+     
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        
       - name: Get version
         run: |
             cat debian/changelog
