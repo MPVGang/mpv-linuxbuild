@@ -1,0 +1,38 @@
+name: Build on MacOS
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Download sources
+        run: git clone --depth 1 --branch v0.33.1 https://github.com/mpv-player/mpv.git mpv
+
+      - name: Install dependencies
+        run: brew install yasm nasm pkg-config libass ffmpeg create-dmg
+        
+      - name: Build
+        run: |
+            cd mpv
+            ./bootstrap.py
+            ./waf configure
+            ./waf
+            TOOLS/osxbundle.py build/mpv
+
+      - name: Build package
+        run: |
+            cd mpv
+            mkdir release
+            cp -r build/mpv.app release
+            create-dmg --sandbox-safe --no-internet-enable --volname "mpv" --app-drop-link 200 185 mpv.dmg release
+            rm -rf release/mpv.app
+            mv mpv.dmg release/
+
+      - name: Create artifact
+        #if: ${{ false }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: mpv
+          path: ./mpv/release/mpv.dmg
