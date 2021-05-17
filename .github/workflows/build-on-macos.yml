@@ -11,7 +11,7 @@ jobs:
         run: git clone --depth 1 --branch v0.33.1 https://github.com/mpv-player/mpv.git mpv
 
       - name: Install dependencies
-        run: brew install yasm nasm pkg-config libass ffmpeg create-dmg
+        run: brew install yasm nasm pkg-config libass luajit ffmpeg create-dmg
         
       - name: Build
         run: |
