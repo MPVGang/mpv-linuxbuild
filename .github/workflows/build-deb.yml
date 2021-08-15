@@ -62,10 +62,17 @@ jobs:
       - name: Set options
         run: echo "--enable-gl-x11 --enable-libmpv-shared" > mpv_options
 
-      - name: Configure sources
+      - name: Configure sources (release)
+        if: ${{ github.event.inputs.mpv_version == 'release'}}
         run: |
             ./use-ffmpeg-release
             ./use-libass-custom 0.15.0
+ 
+      - name: Configure sources (master)
+        if: ${{ github.event.inputs.mpv_version == 'master'}}
+        run: |
+            ./use-ffmpeg-master
+            ./use-libass-master
             
       - name: Use old libass for xenial
         if: ${{ matrix.config.name == 'xenial' }}
@@ -104,5 +111,5 @@ jobs:
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mpv-${{ env.MPV_VERSION }}
+          name: mpv-${{ env.MPV_VERSION }}-${{ github.event.inputs.mpv_version }}
           path: ./mpv_*.deb
