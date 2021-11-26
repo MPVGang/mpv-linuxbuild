@@ -54,7 +54,8 @@ jobs:
             sudo apt-get -y install ./mpv-build-deps*.deb --no-install-recommends
             
       - name: Downgrade openssl and libssl-dev (xenial)
-        if: ${{ matrix.config.name == 'xenial' }}
+        #if: ${{ matrix.config.name == 'xenial' }}
+        if: ${{ false }}
         run: |
             sudo apt-get install -y --allow-downgrades openssl=1.0.2g-1ubuntu4.19 libssl-dev=1.0.2g-1ubuntu4.19
             dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
