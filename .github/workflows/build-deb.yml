@@ -61,8 +61,7 @@ jobs:
             dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
 
       - name: Set options
-        #run: echo "--enable-gl-x11 --enable-libmpv-shared" > mpv_options
-        run: echo "--enable-libmpv-shared" > mpv_options
+        run: echo "--enable-gl-x11 --enable-libmpv-shared" > mpv_options
 
       - name: Configure sources (release)
         if: ${{ github.event.inputs.mpv_version == 'release'}}
