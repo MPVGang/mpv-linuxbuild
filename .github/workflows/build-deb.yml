@@ -16,6 +16,7 @@ jobs:
           - { name: 'xenial', os: 'ubuntu-latest', container: 'wachii/ubuntu-qt:16.04' }
           - { name: 'bionic', os: 'ubuntu-18.04', container: '' }
           - { name: 'focal', os: 'ubuntu-20.04', container: '' }
+          - { name: 'jammy', os: 'ubuntu-22.04', container: '' }
           
     runs-on: ${{ matrix.config.os }}
     container: ${{ matrix.config.container }}
@@ -61,7 +62,7 @@ jobs:
             dpkg -l openssl libssl-dev | grep '^ii' | cut -c5-
 
       - name: Set options
-        run: echo "--enable-gl-x11 --enable-libmpv-shared" > mpv_options
+        run: echo "--enable-gl-x11 --disable-drm --enable-libmpv-shared" > mpv_options
 
       - name: Configure sources (release)
         if: ${{ github.event.inputs.mpv_version == 'release'}}
