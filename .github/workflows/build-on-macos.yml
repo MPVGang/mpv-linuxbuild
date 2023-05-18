@@ -4,11 +4,11 @@ on: [workflow_dispatch]
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-11
 
     steps:
       - name: Download sources
-        run: git clone --depth 1 --branch v0.33.1 https://github.com/mpv-player/mpv.git mpv
+        run: git clone --depth 1 --branch v0.35 https://github.com/mpv-player/mpv.git mpv
 
       - name: Install dependencies
         run: |
