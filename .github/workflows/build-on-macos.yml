@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Download sources
-        run: git clone --depth 1 --branch v0.35 https://github.com/mpv-player/mpv.git mpv
+        run: git clone --depth 1 --branch v0.35.1 https://github.com/mpv-player/mpv.git mpv
 
       - name: Install dependencies
         run: |
